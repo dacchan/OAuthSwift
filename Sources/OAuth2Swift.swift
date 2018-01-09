@@ -301,3 +301,19 @@ open class OAuth2Swift: OAuthSwift {
     }
 
 }
+
+// MARK: - Resource Owner Password Credentials Grant
+
+extension OAuth2Swift {
+    open func authorize(userName: String, password: String, headers: OAuthSwift.Headers? = nil, success: @escaping TokenSuccessHandler, failure: FailureHandler?) -> OAuthSwiftRequestHandle? {
+
+        var parameters = OAuthSwift.Parameters()
+        parameters["client_id"] = self.consumerKey
+        parameters["client_secret"] = self.consumerSecret
+        parameters["username"] = userName
+        parameters["password"] = password
+        parameters["grant_type"] = "password"
+
+        return requestOAuthAccessToken(withParameters: parameters, headers: headers, success: success, failure: failure)
+    }
+}
